@@ -5,9 +5,23 @@ import { images } from '../../constants';
 import { HiMenuAlt4, HiX } from 'react-icons/hi'
 import {motion} from 'framer-motion'
 import { useState } from 'react';
+import resume from '../../assets/WarrenJonasResume.pdf'
 
 const Navbar = () => {
     const [toggle, setToggle] = useState(false)
+
+    const onResumeClick = () => {
+        fetch('WarrenJonasResume.pdf').then(response => {
+            response.blob().then(blob => {
+                const fileURL = window.URL.createObjectURL(blob);
+
+                let alink = document.createElement('a');
+                alink.href = fileURL;
+                alink.download = 'Warren Jonas - Resume.pdf';
+                alink.click();
+            })
+        })
+    }
 
     return (
         <nav className='app__navbar'>
@@ -24,10 +38,10 @@ const Navbar = () => {
                 ))}
             </ul>
 
-            <div className='app__navbar_resume'>
+            <a className='app__navbar_resume' href={resume} target="_blank" >
                 <p>Resume</p>
 
-            </div>
+            </a>
 
             <div className="app__navbar-menu">
                 <HiMenuAlt4 onClick={() => setToggle(true)} />
